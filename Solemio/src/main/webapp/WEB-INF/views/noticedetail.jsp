@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+  String newsNo = request.getParameter("newsNo");
+%>
 <!doctype html>
 <html>
 <head>
@@ -12,7 +15,9 @@
     
      <script>
                     $(document).ready(function(){
-                        var user = {};
+                      var dt= [];
+                      var newsNo = <%=newsNo%>;
+                    	var user = {};
                         
                         $.ajax({
                       	  url:"checkLogin"
@@ -47,6 +52,32 @@
                        
                         //$(".banner").height($(".banner").height() + $(".contents-footer").height());
                         
+                        $.ajax({
+                        	url :"newsDetail",
+                        	data: {"newsNo" : newsNo}
+                        }).done(function(d){
+                        	var result = JSON.parse(d);
+                        	dt = result.data;
+                        	listHtml();
+                        });
+                        function listHtml(){
+                        	var contents = dt.contents
+                        	$(".detail-content1").html(contents);
+                        	
+                        	var title= dt.title
+                        	$(".detail-title-title").html(title);
+                        	
+                        	var id = dt.id
+                        	$(".detail-title-id").html(id);
+                        	
+                        
+                        }
+                        $(".button1").off().on("click",function(){
+                        	location.href="noticeregister?newsNo="+newsNo;
+                        });
+                        $(".button2").click(function(){
+                        	history.back();
+                        });
                     });
                     
      </script>    
@@ -161,12 +192,14 @@
                 <div class="contents-middle">
                     <div class="detail">
                         <div class="detail-title">
-                            <div class="detail-title-no"  style="font-family: 'Nanum Brush Script', serif;font-size: 20px;">번호</div>
-                            <div class="detail-title-title" style="font-family: 'Nanum Brush Script', serif;font-size: 20px;">제목</div>
+                           
+                            <div class="detail-title-title" style="font-family: 'Nanum Brush Script', serif;font-size: 20px; text-align: center;">제목</div>
                             <div class="detail-title-id" style="font-family: 'Nanum Brush Script', serif;font-size: 20px;">아이디</div>
                         </div>
                         <div class="detail-contents">
                             <div class="detail-content1"></div>
+                            <button class="button1" type="button">수정</button>
+                            <button class="button2" type="button">취소</button>
                         </div>
                         
                     </div>

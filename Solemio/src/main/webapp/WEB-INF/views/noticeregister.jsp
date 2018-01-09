@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    String newsNo = request.getParameter("newsNo");
+    %>
 <!doctype html>
 <html>
 <head>
@@ -13,7 +16,8 @@
      <script>
                     $(document).ready(function(){
                     	 var user = {};
-                         
+                     
+                    	 
                          $.ajax({
                        	  url:"checkLogin"
                          }).done(function(d){
@@ -49,17 +53,78 @@
                               $("#notice-writebtn").on("click",function(){
                             	  var title= $("#titleid").val();
                             	  var contents = $("#contentsid").val();
+                            	  console.log(title,contents);
                             	  
                             	  $.ajax({
                             		  type : "post",
                             		  url : "noticewrite",
                             		  data:{"title":title, "contents":contents}
                             	  }).done(function(d){
-                            		  
+                            		  location.href="notice"
                             	  })
                               })
                         //$(".banner").height($(".banner").height() + $(".contents-footer").height());
+                        var dt=[];
+                        var newsNo = <%=newsNo%>;
+                        function loadEvent(){
+                        	$.ajax({
+                        		url : "newsDetail",
+                        		data :{"newsNo" : newsNo}
+                        	}).done(function(d){
+                        		var list = JSON.parse(d);
+                        		
+                        		dt = list.data;
+                        		console.log("jsp:"+dt.title);
+                        		listHtml();
+                        		button();
+                        		
+                        	});
+                        }
+                        if(newsNo==null){
+                        	$(".head-letter p").text("글쓰기");
+                        }else{
+                        	$(".head-letter p").text("글수정");
+                        	loadEvent();
+                        }
                         
+                        
+                        function listHtml(){
+                        	$("#titleid").val(dt.title);
+                        	$("#contentsid").val(dt.contents);
+                        	
+//                         	var contents = dt.contents
+//                         	$(".detail-content1").html(contents);
+                        	
+//                         	var title= dt.title
+//                         	$(".detail-title-title").html(title);
+                        	
+//                         	var id = dt.id
+//                         	$(".detail-title-id").html(id);
+                        }
+                  
+                        function button(){
+                        	$("#notice-updatebtn").off().on("click",function(ev){
+                        		 var title= $("#titleid").val();
+                           	  var contents = $("#contentsid").val();
+                        	
+                        	
+                        			console.log("수정완료");
+                        			$.ajax({
+                        				type:"post",
+                        				url:"updatewrite",
+                        				data:{"title":title, "contents":contents,"no" :newsNo}
+                        			}).done(function(d){
+                        				dt = d.data;
+                        				location.href="noticedetail?newsNo="+newsNo;
+                        			});
+                        			ev.preventDefault();
+                        		
+                        		
+                        	});
+//                         	$("#complupdate").off().on("click,"function(){
+                        		
+//                         	})
+                        }
                     });
                     
      </script>    
@@ -160,7 +225,7 @@
                <!-- left 이미지-->
             <div class="preview">
                
-                
+<!--                 <span>글</span>쓰기 -->
             </div>
             </div>
             <!--실제내용들어가는곳-->
@@ -168,7 +233,7 @@
                 <div class="contents-head">
                     <div class="head-empty"></div>
                     <div class="head-letter">
-                        <p><span>글</span>쓰기</p>
+                        <p></p>
                     </div>
                 </div>
                 <div class="contents-middle">
@@ -179,7 +244,8 @@
                       <input id="contentsid" type="text" placeholder="내용을 입력해주세요." name="type" style="width: 672px; height: 337px;">
                       <button id="notice-writebtn" type="button" style="margin-left: 20px;"name="register">등록</button>
                       <button type="button" style="margin-left: 20px;" name="cansel">취소</button>
-                      <button type="button" style="margin-left: 20px;" name="update">수정</button>
+                      <button id="notice-updatebtn" type="button" style="margin-left: 20px;" name="update">수정</button>
+                        <button id="complupdate" type="button" style="margin-left: 20px;" name="update">수정완료</button>
                   </div>
                     
                 </div>

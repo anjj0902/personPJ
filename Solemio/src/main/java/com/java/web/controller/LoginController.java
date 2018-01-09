@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.java.web.Service.CusvoicewriteServiceInterface;
 import com.java.web.Service.LoginServiceInterface;
+import com.java.web.Service.WriteServiceInterface;
 import com.java.web.Service.joinServiceInterface;
 import com.java.web.util.HttpUtil;
+
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 
 
 
@@ -24,6 +29,12 @@ public class LoginController {
    @Autowired
    LoginServiceInterface lsi;
    
+   @Autowired
+   WriteServiceInterface wsi;
+   
+   @Autowired
+   CusvoicewriteServiceInterface csi;
+   
    @RequestMapping("/loginData")
    public ModelAndView loginData(HttpServletRequest req, HttpServletResponse response, HttpSession session){
 	  HashMap<String, Object> map = new HashMap<String, Object>();
@@ -32,6 +43,7 @@ public class LoginController {
       map = lsi.selectLogin(map);
       System.out.println("controller : "+map);
       if(Integer.parseInt(map.get("stat").toString())==1){
+    	  System.out.println("login"+map);
     	  session.setAttribute("user", map);
       }
       
@@ -59,13 +71,43 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/noticewrite",method = RequestMethod.POST )
-	public ModelAndView noticewrite(HttpServletRequest req, ModelAndView mav){
+	public ModelAndView noticewrite(HttpServletRequest req, ModelAndView mav ,HttpSession session){
 		HashMap<String,Object> param = new HashMap<String, Object>();
+		HashMap<String, HashMap<String, Object>> user = (HashMap<String, HashMap<String, Object>>) session.getAttribute("user");
 		param.put("title",req.getParameter("title"));
 		param.put("contents",req.getParameter("contents"));
+		param.put("id", user.get("id"));
+		System.out.println("controller : "+  user.get("id"));
+		
 		System.out.println("controller : param" + param);
 		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject = JSONObject.fromObject(JSONSerializer.toJSON(wsi.inwriting(param)));
+		mav.addObject("message", jsonObject.toString());		
+		mav.setViewName("json");
 		return mav;
+		
+		
+		
+	}
+	@RequestMapping(value="/cusvoicewrite",method = RequestMethod.POST )
+	public ModelAndView cusvoicewrite(HttpServletRequest req, ModelAndView mav ,HttpSession session){
+		HashMap<String,Object> param = new HashMap<String, Object>();
+		HashMap<String, HashMap<String, Object>> user = (HashMap<String, HashMap<String, Object>>) session.getAttribute("user");
+		param.put("title",req.getParameter("title"));
+		param.put("contents",req.getParameter("contents"));
+		param.put("id", user.get("id"));
+		
+		
+		
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject = JSONObject.fromObject(JSONSerializer.toJSON(csi.cusinwriting(param)));
+		mav.addObject("message", jsonObject.toString());		
+		mav.setViewName("json");
+		return mav;
+		
+		
 		
 	}
 

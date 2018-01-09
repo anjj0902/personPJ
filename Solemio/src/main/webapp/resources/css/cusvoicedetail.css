@@ -190,22 +190,44 @@ body{
 
 /*내용의 머리*/
 .contents-head{
-    background-color: aquamarine;
+    
     width: 100%;
     /*height: 20%;*/
 }
 /*내용의 중간*/
 .contents-middle{
-    background-color: darkgoldenrod;
+    
     width: 100%;
     height: 416px;
     
 }
-
+.detail-title-no{
+  border : 1px solid black;
+    width: 20%;
+    height: 40px;
+    float: left;
+}
+.detail-title-title{
+    border : 1px solid black;
+    width: 80%;
+    height: 40px;
+    float: left;
+}
+.detail-title-id{
+    border : 1px solid black;
+    width: 20%;
+    height: 40px;
+    float: left
+}
+.detail-content1{
+    border : 1px solid black;
+    width: 100%;
+    height: 420px;
+}
 
 /*글내용이 들어가는부분*/
 .middle-letter{
- background-color: antiquewhite;
+ 
  width: 100%;
  height: 50%;
 }    
@@ -213,14 +235,14 @@ body{
 
 /*머리의 빈공간*/
 .head-empty{
-    background-color: beige;
+    
     width: 100%;
     /*height: 50%;*/
     height: 70px;
 }
 /*머리의 글 들어가는곳*/
 .head-letter{
-     background-color: firebrick;
+     
     width: 100%;
     /*height: 50%;*/
     height: 70px;
@@ -235,13 +257,13 @@ body{
     font-size: 40px;
 }
 .notice-header{
-    background-color: blue;
+    
     width: 100%;
     height: 30px;
     
 }
 .notice-header-no{
-    background-color:aqua;
+    
     width: 20%;
     height: 30px;
     float: left;
@@ -251,7 +273,7 @@ body{
     
 }
 .notice-header-title{
-     background-color:dimgray;
+     
     width: 60%;
     height: 30px;
     float: left;
@@ -261,7 +283,7 @@ body{
 }
 
 .notice-header-id{
-     background-color:antiquewhite;
+     
     width: 20%;
     height: 30px;
     float: left;
@@ -271,7 +293,7 @@ body{
     
 }
 .notice-middle-no{
-    background-color:aqua;
+    
     width: 20%;
     height: 30px;
     float: left;
@@ -280,7 +302,7 @@ body{
     border-style: outset;
 }
 .notice-middle-title{
-     background-color:dimgray;
+     
     width: 60%;
     height: 30px;
     float: left;
@@ -290,7 +312,7 @@ body{
 }
 
 .notice-middle-id{
-     background-color:antiquewhite;
+     
     width: 20%;
     height: 30px;
     float: left;

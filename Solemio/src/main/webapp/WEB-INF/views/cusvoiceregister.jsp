@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	String newsNo = request.getParameter("newsNo");
+    %>
 <!doctype html>
 <html>
 <head>
@@ -45,8 +48,65 @@
                           	   });
                              });
                        
-                        //$(".banner").height($(".banner").height() + $(".contents-footer").height());
+                     $("#cusvoice-writebtn").off();
+                     $("#cusvoice-writebtn").on("click",function(){
+                    	 var title = $("#cus-title").val();
+                    	 var contents = $("#cus-contents").val();
+                    	 console.log(title,contents);
+                    	 
+                    	 $.ajax({
+                    		 type : "post",
+                    		 url : "cusvoicewrite",
+                    		 data : {"title":title,"contents":contents}
+                    	 }).done(function(d){
+                    		 location.href="cusvoice";
+                    	 })
+                     })
                         
+                     var dt=[];
+                     var newsNo = <%=newsNo%>;
+                     function loadEvent(){
+                    	 $.ajax({
+                    		 url: "cusvoiceDetail",
+                             data:{"newsNo" : newsNo}                   	 
+                    	 }).done(function(d){
+                    		 var list = JSON.parse(d);
+                    	 	
+                    		 dt = list.data;
+                     		console.log("jsp:"+dt.title);
+                     		listHtml();
+                     		button();
+                    	 });
+                    	 
+                     }
+                     if(newsNo==null){
+                    	 $(".head-letter p").text("글쓰기");
+                     }else{
+                    	 $(".head-letter p").text("글수정");
+                    	 loadEvent();
+                     }
+                     function listHtml(){
+                    	 $("#cus-title").val(dt.title);
+                    	 $("#cus-contents").val(dt.contents);
+                     }
+                     
+                     function button(){
+                    	 $("#cusvoice-updatebtn").off().on("click",function(ev){
+                    		 var title=$("#cus-title").val();
+                    		 var contents = $("#cus-contents").val();
+                    		 
+                    		 $.ajax({
+                    			 type:"post",
+                    			 
+                    			 url:"cusupdatewrite",
+                    			 data:{"title":title, "contents":contents,"no" :newsNo}
+                    		 }).done(function(d){
+                    			 dt = d.data;
+                    			 location.href="cusvoicedetail?newsNo="+newsNo;
+                    		 });
+                    		 ev.preventDefault();
+                    	 });
+                     }
                     });
                     
      </script>    
@@ -160,13 +220,13 @@
                 </div>
                 <div class="contents-middle">
                   <div class="notice-title">
-                      <p style="font-family: 'Nanum Brush Script', serif;font-size: 18px;">제목 :</p><input type="text"placeholder="입력해주세요..." name="text"style="margin-left: 36px;transform: translatey(-21px); width: 300px; ">
+                      <p style="font-family: 'Nanum Brush Script', serif;font-size: 18px;">제목 :</p><input id="cus-title" type="text"placeholder="입력해주세요..." name="text"style="margin-left: 36px;transform: translatey(-21px); width: 300px; ">
                   </div>
                   <div class="notice-contents">
-                      <input type="text" placeholder="내용을 입력해주세요." name="type" style="width: 672px; height: 337px;">
-                      <button type="button" style="margin-left: 20px;"name="register">등록</button>
+                      <input id="cus-contents" type="text" placeholder="내용을 입력해주세요." name="type" style="width: 672px; height: 337px;">
+                      <button id="cusvoice-writebtn" type="button" style="margin-left: 20px;"name="register">등록</button>
                       <button type="button" style="margin-left: 20px;" name="cansel">취소</button>
-                      <button type="button" style="margin-left: 20px;" name="update">수정</button>
+                      <button id="cusvoice-updatebtn" type="button" style="margin-left: 20px;" name="update">수정</button>
                   </div>
                     
                 </div>
