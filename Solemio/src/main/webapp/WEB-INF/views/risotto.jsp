@@ -1,9 +1,10 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 <head>
-     <link rel="stylesheet" href="resources/css/cusvoice.css">
+     <link rel="stylesheet" href="resources/css/spagetti.css">
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,21 +13,69 @@
     
      <script>
                     $(document).ready(function(){
-                        $("#myBtn").click(function(){
-                            $("#myModal").modal();
+                        var user = {};
+                        
+                        $.ajax({
+                           url:"checkLogin"
+                        }).done(function(d){
+                           user = JSON.parse(d);
+                           console.log(user);
+                          if(user.state==0){
+                             $("#loginbutton").show();
+                             $("#joinbutton").show();
+                             
+                          }else{
+                             $("#joinbutton").hide();
+                             $("#loginbutton").hide();                    
+                             $("#btnIdbox p").html(user.id +"님 입장.").css({"color":"white","margin":"0","font-size":"13px"})
+                            var tag ="<button type='button' class='logout'id='logoutbtn' style='color : red; '>로그아웃</button>"
+                               $("#btnIdbox .logout").html(tag);
+                          }
+                          if(user.auth==1){
+                              $("#memberinfo-view").show();
+                           }else{
+                             $("#memberinfo-view").hide();
+                           }
                         });
-                        $("#myBtn1").click(function(){
-                            $("#myModal1").modal();
-                        });
-                        $(".loginbtn").click(function(){
-                            $(".modal-backdrop").removeClass();
-                        });
-                         $(".joinbtn").click(function(){
-                            $(".modal-backdrop").removeClass();
-                        });
+                             $(".logout").click(function(){
+                                $.ajax({
+                                   url:"logout"
+                                }).done(function(d){
+                                   alert("로그아웃됩니다.")
+                                 location.reload();
+                                });
+                             });
                        
+                        $("#addBtn").on("click", function(){
+                           location.href= "menuregister?menutype=2";
+                        });
                         //$(".banner").height($(".banner").height() + $(".contents-footer").height());
                         
+                        
+                        $.ajax({
+                               type:"post", 
+                               url:"getMenu", // Spring에서 만든 URL 호출
+                               data:{"menu_type" : 2}
+                         }).done(function(d){ // 비동기식 데이터 가져오기
+                            var result = JSON.parse(d);
+                            data = result;
+                            
+                            for(var i=0; i< data.length; i++){
+                               console.log(data[i].name);
+                               var tag = '<div class="menu2-left">' +
+                                  '<div class="menu2-left-letter">' + data[i].name + 
+                                  '<img style="height: 100px;" src="resources/upload/' + data[i].image_name1 + '" />' +
+                                  '<img style="height: 100px;" src="resources/upload/' + data[i].image_name2 + '" />' +
+                                  '<img style="height: 100px;" src="resources/upload/' + data[i].image_name3 + '" />' +
+                                  '</div>'+
+                                  '<div class="menu2-left-contents">'+
+                                      '<button type="button" style="margin-left: 179px;margin-top: 142px;">삭제</button>'+
+                                  '</div>'+
+                                 '</div>';
+                              $("#spagetti-menu").append(tag);
+                               
+                            }
+                         })
                     });
                     
      </script>    
@@ -99,40 +148,26 @@
             
         </div>
                 </div>
-                
-             <div class="menu-login">
-                    <a style="text-align: center;margin-left: 25px; font-family: 'Nanum Brush Script', serif;font-weight: bold; font-size: 20px">회원정보 보기</a>
-                
-                    <div class="container" style="margin-top: 0%; margin-top: -37%;width: 100%; height: 125px;height: 90px;  padding: 27px 0 32px 22px;
+               <div class="menu-login">
+                  <div class="container" style="margin-top: 0%;width: 100%; height: 125px; padding: 27px 0 32px 22px;
                     background: #311e0a;
                     border-top: 1px solid #5a4b3b;
                     border-bottom: 1px solid #5a4b3b;
                     margin-bottom: 110px;">
+                      <a href="memberinfo" id="memberinfo-view" style="text-align: center;margin-left: 2px; font-family: 'Nanum Brush Script', serif;font-weight: bold; font-size: 20px">회원정보 보기</a>
                       
-                      <!-- Trigger the modal with a button -->
-                      <button type="button" class="btn btn-default btn-sm loginbtn" id="myBtn" style="float: left; font-size: 1.3rem; font-family: 'Nanum Brush Script', serif; font-weight: bold;">Login</button>
-                  
+                      <a href="login"><button type="button" class="btn btn-default btn-sm loginbtn" id="loginbutton" style="float: left; font-size: 1.3rem; font-family: 'Nanum Brush Script', serif; font-weight: bold;">Login</button></a>
+                                    
+                       <!--join 버튼-->
+                                         
+                  <a href="join"><button type="button" class="btn btn-default btn-sm joinbtn" id="joinbutton" style=" font-size: 1.3rem;font-family: 'Nanum Brush Script', serif;font-weight: bold; " >Join</button></a>                  
                     
-
-                    
-                    
-                    <!--join 버튼-->
-                           
-                      
-                      <!-- Trigger the modal with a button -->
-                      
-                    <button type="button" class="btn btn-default btn-sm joinbtn" id="myBtn1" style=" font-size: 1.3rem;font-family: 'Nanum Brush Script', serif;font-weight: bold; " >Join</button>
-                    
-
-                    
-                    
+                     <div id="btnIdbox" style="width: 100%;height: 20px;">
+                       <p style="margin : 0%"></p>
+                       <div class="logout">
+                          
+                       </div>
                     </div>
-                    <div class="container" style="margin-top: 0%; margin-top: -84%;width: 100%; height: 125px;height: 90px;  padding: 27px 0 32px 22px;
-                    background: #311e0a;
-                    border-top: 1px solid #5a4b3b;
-                    border-bottom: 1px solid #5a4b3b;
-                    margin-bottom: 110px;">
-                        <a style="text-align: center;margin-left: 10px; font-family: 'Nanum Brush Script', serif;font-weight: bold; font-size: 20px">@솔레미오</a>
                     </div>
 
                 
@@ -147,27 +182,21 @@
             <!--실제내용들어가는곳-->
             <div class="banner">
                 <div class="contents-head">
-                    <div class="head-empty"></div>
-                    <div class="head-letter">
-                        <p><span>공</span>지사항</p>
-                        <button type="button" style="margin-left: 620px;">등록</button>
+                    <div class="head-letter" style="margin-top: 4%;">
+                    <p style="color: rgb(137,203,49);margin-left: 5%; font-family: rgb(51, 51, 51);"><span style="font-size: 60px;color: rgb(196,173,101);">S</span>olemio spagetti</p>
+                        <p style="margin-top: -3%;margin-left: 5%;    color: rgb(137,203,49);"><span style="font-size: 60px;color: rgb(196,173,101);">스</span>파게티</p>
+                    <div class="tree-bar" style="width: 100%;height: 24px;">
+                        <div style="width: 242px; height: 24px;background : url(resources/img/linemap_bg.png) 0 0 no-repeat; margin-top: -2%;margin-left: 3%;">
+                           <a href="main"><p style="font-size: 20px;color: white;margin-left: 13%;">home으로 이동</p></a>
+                        </div>
+                        <hr style="width:71%; margin-left: 31%;margin-top: 0%;border: outset 1,,px yellow">
+                        
                     </div>
+                    </div>
+                    <button type="button" id="addBtn" style="padding: 0;margin-left: 619px;">등록</button>
                 </div>
-                <div class="contents-middle">
-                    <div class="notice-header">
-                        <div class="notice-header-no">번호</div>
-                        <div class="notice-header-title">제목</div>
-                        <div class="notice-header-id">아이디</div>
-                    </div>
-                    <div class="notice-middle">
-                        <div class="notice-middle-no">1</div>
-                        <div class="notice-middle-title">솔레미오 공지사항 입니다.</div>
-                        <div class="notice-middle-id">test</div>
-                    </div>
-                     <div class="notice-middle">
-                        <div class="notice-middle-no">2</div>
-                        <div class="notice-middle-title">1월초 신메뉴 로제크림파스타 출시예정</div>
-                        <div class="notice-middle-id">test1</div>
+                <div class="contents-middle" style="margin-top: 11%;">
+                    <div id="spagetti-menu">
                     </div>
                     
                 </div>
@@ -177,27 +206,28 @@
             </div>
             
             <div class="fixright">
-            	<div class="fixright-head">
-            		<div class="fixright-head-first"></div>
-            		<div class="fixright-head-second">
-            			<p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 7%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">O</span>riginal italia</p>
-            			<p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 26%;margin-top: -17%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">S</span>olemio</p>
-            		</div>
-            		<div class="fixright-head-thrid"></div>
-            	</div>
-            	<div class="fixright-middle">
-            		<img style="width: 100%;height: 35%;"
-            		src="http://www.sorrento.co.kr/img/common/right_img1.png" alt="">
-            		<img style="width: 100%;height: 35%;"
-            		src="http://www.sorrento.co.kr/img/common/right_img2.png" alt="">
-            		<img style="width: 100%;height: 35%;"
-            		src="http://www.sorrento.co.kr/img/common/right_img3.png" alt="">
-            	</div>
-            	<div class="fixright-footer"></div>
+               <div class="fixright-head">
+                  <div class="fixright-head-first"></div>
+                  <div class="fixright-head-second">
+                     <p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 7%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">O</span>riginal italia</p>
+                     <p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 26%;margin-top: -17%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">S</span>olemio</p>
+                  </div>
+                  <div class="fixright-head-thrid"></div>
+               </div>
+               <div class="fixright-middle">
+                  <img style="width: 100%;height: 35%;"
+                  src="http://www.sorrento.co.kr/img/common/right_img1.png" alt="">
+                  <img style="width: 100%;height: 35%;"
+                  src="http://www.sorrento.co.kr/img/common/right_img2.png" alt="">
+                  <img style="width: 100%;height: 35%;"
+                  src="http://www.sorrento.co.kr/img/common/right_img3.png" alt="">
+               </div>
+               <div class="fixright-footer"></div>
             </div>
             
+            
         </div>
-       
+             
         
     </body>
    

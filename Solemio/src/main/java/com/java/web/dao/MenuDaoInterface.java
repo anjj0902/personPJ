@@ -1,0 +1,9 @@
+package com.java.web.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+public interface MenuDaoInterface {
+	public void save(HashMap<String, Object> param);
+    public List<HashMap> getMenu(String menu_type);
+}

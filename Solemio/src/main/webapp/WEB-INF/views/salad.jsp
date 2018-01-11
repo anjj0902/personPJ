@@ -156,7 +156,7 @@
                     <p style="color: rgb(137,203,49);margin-left: 5%; font-family: rgb(51, 51, 51);"><span style="font-size: 60px;color: rgb(196,173,101);">S</span>olemio Salad</p>
                         <p style="margin-top: -3%;margin-left: 5%;    color: rgb(137,203,49);"><span style="font-size: 60px;color: rgb(196,173,101);">샐</span>러드</p>
                     <div class="tree-bar" style="width: 100%;height: 24px;">
-                        <div style="width: 242px; height: 24px;background : url(/web/resources/img/linemap_bg.png) 0 0 no-repeat; margin-top: -2%;margin-left: 3%;">
+                        <div style="width: 242px; height: 24px;background : url(resources/img/linemap_bg.png) 0 0 no-repeat; margin-top: -2%;margin-left: 3%;">
                         	<a href="main"><p style="font-size: 20px;color: white;margin-left: 13%;">home으로 이동</p></a>
                         </div>
                         <hr style="width:71%; margin-left: 31%;margin-top: 0%;border: outset 1,,px yellow">

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!doctype html>
 <html>
 <head>
@@ -12,41 +13,53 @@
     
      <script>
                     $(document).ready(function(){
+                       submenu = '<%=request.getParameter("submenu")%>'
+                       menutype = '<%=request.getParameter("menutype")%>'
+                       
+                       $("input[name=menu_type]").val(menutype);
+                       
+                       if(submenu != 'Y'){
+                          $("div[name=submenu]").hide();
+                       }
                         var user = {};
                         
                         $.ajax({
-                      	  url:"checkLogin"
+                           url:"checkLogin"
                         }).done(function(d){
-                      	  user = JSON.parse(d);
-                      	  console.log(user);
-                      	 if(user.state==0){
-                      		 $("#loginbutton").show();
-                      		 $("#joinbutton").show();
-                      		 
-                      	 }else{
-                      		 $("#joinbutton").hide();
-                      		 $("#loginbutton").hide();             		 
-                      		 $("#btnIdbox p").html(user.id +"님 입장.").css({"color":"white","margin":"0","font-size":"13px"})
-                      		var tag ="<button type='button' class='logout'id='logoutbtn' style='color : red; '>로그아웃</button>"
-               		    		$("#btnIdbox .logout").html(tag);
-                      	 }
-                      	 if(user.auth==1){
-                       		 $("#memberinfo-view").show();
-                       	 }else{
-                       		$("#memberinfo-view").hide();
-                       	 }
+                           user = JSON.parse(d);
+                           console.log(user);
+                          if(user.state==0){
+                             $("#loginbutton").show();
+                             $("#joinbutton").show();
+                             
+                          }else{
+                             $("#joinbutton").hide();
+                             $("#loginbutton").hide();                    
+                             $("#btnIdbox p").html(user.id +"님 입장.").css({"color":"white","margin":"0","font-size":"13px"})
+                            var tag ="<button type='button' class='logout'id='logoutbtn' style='color : red; '>로그아웃</button>"
+                               $("#btnIdbox .logout").html(tag);
+                          }
+                          if(user.auth==1){
+                              $("#memberinfo-view").show();
+                           }else{
+                             $("#memberinfo-view").hide();
+                           }
                         });
                              $(".logout").click(function(){
-                          	   $.ajax({
-                          		   url:"logout"
-                          	   }).done(function(d){
-                          		   alert("로그아웃됩니다.")
-                          		 location.reload();
-                          	   });
+                                $.ajax({
+                                   url:"logout"
+                                }).done(function(d){
+                                   alert("로그아웃됩니다.")
+                                 location.reload();
+                                });
                              });
                        
                         //$(".banner").height($(".banner").height() + $(".contents-footer").height());
                         
+                        $("#addBtn").on("click", function(){
+                           
+                           $("form").submit();
+                        });
                     });
                     
      </script>    
@@ -134,10 +147,10 @@
                   <a href="join"><button type="button" class="btn btn-default btn-sm joinbtn" id="joinbutton" style=" font-size: 1.3rem;font-family: 'Nanum Brush Script', serif;font-weight: bold; " >Join</button></a>                  
                     
                      <div id="btnIdbox" style="width: 100%;height: 20px;">
-                    	<p style="margin : 0%"></p>
-                    	<div class="logout">
-                    		
-                    	</div>
+                       <p style="margin : 0%"></p>
+                       <div class="logout">
+                          
+                       </div>
                     </div>
                     </div>
                 
@@ -150,60 +163,63 @@
             </div>
             </div>
             <!--실제내용들어가는곳-->
-            <div class="banner">
-                <div class="contents-head">
-                    <div class="head-empty"></div>
-                    <div class="head-letter">
-                        <p><span>메</span>뉴등록</p>
-                    </div>
-                </div>
-                <div class="contents-middle">
-                     <div class="menu-upload">
-                        <div class="menu-uploadbutton">
-                            <button type="button">열기</button>
-                        </div>
-                        <div class="menu-dropdown">
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">메뉴 선택
-                                <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                  <li><a href="#">크림</a></li>
-                                  <li><a href="#">오일</a></li>
-                                  <li><a href="#">고추장</a></li>
-                                </ul>
-                              </div>
-                         </div> 
-                        </div>
+         <div class="banner">
+            <form method="post" action="addMenu" enctype="multipart/form-data">
+               <input type="hidden" name="menu_type" />
+               <div class="contents-head">
+                  <div class="head-empty"></div>
+                  <div class="head-letter">
+                     <p>
+                        <span>메</span>뉴등록
+                     </p>
+                  </div>
+               </div>
+               <div class="contents-middle">
+                  <div class="menu-upload">
+                     <div class="menu-uploadbutton">
+                       <input type="text" placeholder="메뉴이름을 작성해주세요." name="menu_name">
+                        <input type="file" name="img1" value="열기" />
+                        <input type="file" name="img2" value="열기" />
+                        <input type="file" name="img3" value="열기" />
                      </div>
-                     <div class="menu-button">
-                         
+                     <div name="submenu">
+                        <select name="menu">
+                           <option>>메뉴 선택</option>
+                           <option value="1">크림</option>
+                           <option value="2">오일</option>
+                           <option value="3">고추장</option>
+                        </select>
                      </div>
-                    <button type="button">등록</button>
-                         <button type="button">취소</button>
-                </div>
-              
-                
-            
-            
-            
-            <div class="fixright">
-            	<div class="fixright-head">
-            		<div class="fixright-head-first"></div>
-            		<div class="fixright-head-second">
-            			<p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 7%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">O</span>riginal italia</p>
-            			<p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 26%;margin-top: -17%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">S</span>olemio</p>
-            		</div>
-            		<div class="fixright-head-thrid"></div>
-            	</div>
-            	<div class="fixright-middle">
-            		<img style="width: 100%;height: 35%;"
-            		src="http://www.sorrento.co.kr/img/common/right_img1.png" alt="">
-            		<img style="width: 100%;height: 35%;"
-            		src="http://www.sorrento.co.kr/img/common/right_img2.png" alt="">
-            		<img style="width: 100%;height: 35%;"
-            		src="http://www.sorrento.co.kr/img/common/right_img3.png" alt="">
-            	</div>
-            	<div class="fixright-footer"></div>
+                  </div>
+               </div>
+            </form>
+            <div class="menu-button"></div>
+            <button id="addBtn" type="button">등록</button>
+            <button type="button">취소</button>
+         </div>
+
+
+
+
+
+      <div class="fixright">
+               <div class="fixright-head">
+                  <div class="fixright-head-first"></div>
+                  <div class="fixright-head-second">
+                     <p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 7%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">O</span>riginal italia</p>
+                     <p style="font-size: 30px;font-family: 'Nanum Brush Script', serif; margin-left: 26%;margin-top: -17%;"><span style="font-size: 50px;font-family: 'Jeju Hallasan';">S</span>olemio</p>
+                  </div>
+                  <div class="fixright-head-thrid"></div>
+               </div>
+               <div class="fixright-middle">
+                  <img style="width: 100%;height: 35%;"
+                  src="http://www.sorrento.co.kr/img/common/right_img1.png" alt="">
+                  <img style="width: 100%;height: 35%;"
+                  src="http://www.sorrento.co.kr/img/common/right_img2.png" alt="">
+                  <img style="width: 100%;height: 35%;"
+                  src="http://www.sorrento.co.kr/img/common/right_img3.png" alt="">
+               </div>
+               <div class="fixright-footer"></div>
             </div>
             
         </div>

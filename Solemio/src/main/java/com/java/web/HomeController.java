@@ -86,10 +86,7 @@ public class HomeController {
 	public String memberupdate(){
 		return "memberupdate";
 	}
-	@RequestMapping("/menuregister")
-	public String menuregister(){
-		return "menuregister";
-	}
+	
 	@RequestMapping("/mypage")
 	public String mypage(){
 		return "mypage";
@@ -129,6 +126,10 @@ public class HomeController {
 	@RequestMapping("/login")
 	public String login(){
 		return "login";
+	}
+	@RequestMapping("/risotto")
+	public String risotto(){
+		return "risotto";
 	}
 	
 }

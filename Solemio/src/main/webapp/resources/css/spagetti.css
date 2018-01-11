@@ -21,6 +21,9 @@ body{
     bottom: 0;
     left: 0;
 }
+.disNone{
+    display: none;
+}
 /*메뉴탭 왼쪽 부분*/
 .menu{
     background: #261708 repeat-y;
@@ -30,7 +33,7 @@ body{
 }
 /*미리보기 부분*/
 .preview{
-    background : url(/web/resources/img/navi_bg.png);
+    background : url(/resources/img/navi_bg.png);
     position: absolute;
     width: 125px;
     top: 0;
@@ -52,7 +55,7 @@ body{
 }
 /*오른쪽 그림들어가는 부분*/
 .fixright{
-    background : url(/web/resources/img/bg.png);
+    background : url(/resources/img/bg.png);
     width: 180px;
     height: 100%;
     position: fixed;
@@ -190,13 +193,13 @@ body{
 
 /*내용의 머리*/
 .contents-head{
-    background-color: aquamarine;
+    
     width: 100%;
     /*height: 20%;*/
 }
 /*내용의 중간*/
 .contents-middle{
-    background-color: darkgoldenrod;
+    
     width: 100%;
     height: 500px;
     
@@ -205,7 +208,7 @@ body{
 
 /*글내용이 들어가는부분*/
 .middle-letter{
- background-color: antiquewhite;
+ 
  width: 100%;
  height: 50%;
 }    
@@ -213,14 +216,14 @@ body{
 
 /*머리의 빈공간*/
 .head-empty{
-    background-color: beige;
+    
     width: 100%;
     /*height: 50%;*/
     height: 70px;
 }
 /*머리의 글 들어가는곳*/
 .head-letter{
-     background-color: firebrick;
+     
     width: 100%;
     /*height: 50%;*/
     height: 70px;
@@ -236,128 +239,121 @@ body{
 }
 /*메뉴가 들어가는곳*/
 #spagetti-menu{
-    background-color: black;
+    
     width: 100%;
     height: 600px;
     
 }
 /*메뉴에 이름 이 들어가는부분*/
 #spagetti-menu .menu1{
-    background-color: aqua;
+    
     width: 100%;
     height: 10%;
 }
 /*메뉴 내용 첫째 줄*/
 #spagetti-menu .menu2{
-    background-color: forestgreen;
+    
     width: 100%;
     height: 35%;
 }
 /*메뉴 내용 두번째 줄*/
 #spagetti-menu .menu3{
-     background-color: azure;
+     
     width: 100%;
     height: 35%;
 }
 /*메뉴 첫재쭐에 삼등분 한것의 왼쪽*/
 .menu2 .menu2-left{
-    background-color: dimgrey;
+    
     width: calc(100% / 3);
     height: 100%;
     float: left;
 }
 /*왼쪽의 제목 내용부분*/
 .menu2-left .menu2-left-letter{
-    background-color: dodgerblue;
+    
     width: 100%;
     height: 20%;
 }
 .menu2-left .menu2-left-contents{
-    background-color: aquamarine;
+    
     width: 100%;
-    height: 80%;
+    height: 100px;
 }
 
 .menu2 .menu2-middle{
-    background-color: aqua;
+    
     width: calc(100% / 3);
     height: 100%;
     float: left;
 }
 /*첫째줄 제목과 내용부분*/
 .menu2-middle .menu2-middle-letter{
-       background-color: antiquewhite;
+       
     width: 100%;
     height: 20%;
 }
 .menu2-middle .menu2-middle-contents{
-      background-color: bisque;
+      
     width: 100%;
     height: 80%;
 }
 .menu2 .menu2-right{
-    background-color: beige;
+    
     width: calc(100% / 3);
     height: 100%;
     float: left;
 }
 .menu2-right .menu2-right-letter{
-       background-color: dodgerblue;
+       
     width: 100%;
     height: 20%;
 }
 .menu2-right .menu2-right-contents{
-     background-color: aquamarine;
+     
     width: 100%;
     height: 80%;
 }
 
 .menu3 .menu3-left{
-    background-color: chocolate;
+    
     width: calc(100% / 3);
     height: 100%;
     float: left;
 }
 .menu3-left .menu3-left-letter{
-      background-color: dodgerblue;
+      
     width: 100%;
     height: 20%;
 }
 .menu3-left .menu3-left-contents{
-     background-color: bisque;
     width: 100%;
     height: 80%;
 }
 .menu3-middle .menu3-middle-letter{
-       background-color: antiquewhite;
     width: 100%;
     height: 20%;
 }
 .menu3-middle .menu3-middle-contents{
-      background-color: aqua;
     width: 100%;
     height: 80%;
 }
 .menu3-right .menu3-right-letter{
-    background-color: dodgerblue;
     width: 100%;
     height: 20%;
 }
 .menu3-right .menu3-right-contents{
-    background-color: aquamarine;
     width: 100%;
     height: 80%;
 }
 
 
 .menu3 .menu3-middle{
-    background-color: darkgreen;
     width: calc(100% / 3);
     height: 100%;
     float: left;
 }
 .menu3 .menu3-right{
-    background-color: darkorange;
     width: calc(100% / 3);
     height: 100%;
     float: left;
@@ -384,6 +380,24 @@ body{
 .fixright-head{
 	
 }
+.menu-contents{
+	background-color: red;
+	 width: calc(100% / 3);
+	height: 200px;
+	float: left;
+}
+.w3-modal-content4{
+   width: 546px;
+   height:350px;
+   position: fixed;
+   margin-left: 33%;
+   background-color: black;
+}
+.w3-container{
+   width: 100%;
+   height: 450px;
+} 
+
 
 
 

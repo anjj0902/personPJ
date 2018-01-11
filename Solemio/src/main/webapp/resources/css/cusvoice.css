@@ -30,7 +30,7 @@ body{
 }
 /*미리보기 부분*/
 .preview{
-	background : url(/web/resources/img/navi_bg.png);
+	background : url(/resources/img/navi_bg.png);
 	position: absolute;
     width: 125px;
     top: 0;
@@ -52,7 +52,7 @@ body{
 }
 /*오른쪽 그림들어가는 부분*/
 .fixright{
-    background : url(/web/resources/img/bg.png);
+    background : url(/resources/img/bg.png);
     width: 180px;
     height: 100%;
     position: fixed;
