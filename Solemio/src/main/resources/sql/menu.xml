@@ -15,6 +15,10 @@
       where menu_type = #{menu_type}
       order by name
    </select>
+   <select id="Selectkey" parameterType="hashmap" resultType="hashmap">
+    select * from menu where key1 = #{key}
+
+   </select>
 
 
    

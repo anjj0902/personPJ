@@ -24,6 +24,9 @@ body{
 .disNone{
     display: none;
 }
+.disblock {
+	display: block!important;
+}
 /*메뉴탭 왼쪽 부분*/
 .menu{
     background: #261708 repeat-y;
@@ -46,7 +49,7 @@ body{
 .banner{
     background: rgba(227,224,197,16.9);
     /*width: 62.38%;*/
-    height: 100%;
+    height: 1000px;
     /*float: left;
     margin-left: 22.2%;*/
     left: 245px;
@@ -386,6 +389,7 @@ body{
 	height: 200px;
 	float: left;
 }
+
 .w3-modal-content4{
    width: 546px;
    height:350px;
@@ -397,10 +401,45 @@ body{
    width: 100%;
    height: 450px;
 } 
+.bannerControl{
+   position:absolute;
+   
+   top: 50%;
+   left: 33%;
+   width: 546px;
+}
 
-
-
-
+.bannerControl .btn {
+	background-color: black;
+}
+.bannerControl .button2 {
+	float: left;
+}
+.bannerControl .button2 {
+	float: right;
+}
+.menulist{
+	
+	width: calc(100%/3);
+	height: 170px;
+	float: left;
+	margin-top: 2%;
+}
+.menuname{
+	
+	width: 100%;
+	height: 20%;
+	text-align: center;
+}
+.menuin{
+	
+	width: 80%;
+	height: 80%;
+	margin-left: 10%;
+}
+.w3-button img{
+	margin-top: 5%;
+}
 
 
 

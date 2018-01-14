@@ -15,9 +15,10 @@
     
      <script>
                     $(document).ready(function(){
-//                     	startZ();
+                    	 
+									
                     	var user = {};
-                        
+                        var dt = {};
                         $.ajax({
                            url:"checkLogin"
                         }).done(function(d){
@@ -49,43 +50,13 @@
                                 });
                              });
                        
+                 //등록버튼 눌렀을때            
                         $("#addBtn").on("click", function(){
                            location.href= "menuregister?submenu=Y&menutype=1";
                         });
-                        //$(".banner").height($(".banner").height() + $(".contents-footer").height());
-//                         function startZ(){
-//                   	      iB = setInterval(function(){
-//                   	         var bi = 0; // 방향 정의 0이면 왼쪽으로, 1이면 오른쪽으로 화면 전환
-//                   	         var i = $(".menubannerli").index($(".menubannerli.disblock")); // 현재 보여지는 화면의 인덱스 구하기.
-//                   	         // 사라지는 효과 넣기 animate(css, 속도)
-//                   	         $(".menubannerli").eq(i).animate({
-//                   	              opacity: '0.6' // 투명도
-//                   	          }, 1000).addClass("disNone").removeClass("disblock");
-//                   	         // addClass() : 클래스를 주입하는 함수
-//                   	         // removeClass() : 해당 클래스 삭제하는 함수
-//                   	         if(bi == 0){ // 왼쪽
-//                   	            if(i == 0){ // 현재 인덱스가 0이면 -1값이 되지 않게 하기 위해서 사용
-//                   	               i = ($(".menubannerli").length - 1); // 현재 이미지 갯수를 인덱스로 처리 
-//                   	            }else {
-//                   	               i--; // 현재 인덱스 보다 -1 되도록 처리
-//                   	            }
-//                   	         }else if(bi == 1){ // 오른쪽
-//                   	            if(i == ($(".menubannerli").length - 1)){ // 현재 인덱스가 이미지 갯수 보다 커지지 않게 하기 위해서 처리
-//                   	               i = 0; // 처음으로 돌아가지 위해서 0 값으로 변경
-//                   	            }else {
-//                   	               i++; // 현재 인덱스 보다 +1 되도록 처리
-//                   	            }
-//                   	         }
-//                   	         $(".menubannerli").eq(i).addClass("disblock").removeClass("disNone").animate({
-//                   	              opacity: '1'
-//                   	          }, 800); // 위의 정의 되어진 내용으로 화면에 출력
-//                   	      }, 2500);
-                  	      
-                  	      
-//                   	   }                  	   
-                        
+                                      
         
-                
+                //메뉴 불러오기
                         $.ajax({
                                type:"post", 
                                url:"getMenu", // Spring에서 만든 URL 호출
@@ -93,55 +64,87 @@
                          }).done(function(d){ // 비동기식 데이터 가져오기
                             var result = JSON.parse(d);
                             data = result;
+                            console.log("jsp data:" + data)
                             
                             for(var i=0; i< data.length; i++){
-                               console.log(data[i].name);
-                               var tag = '<div onclick="document.getElementById('+"'id05'"+').style.display='+"'block'"+'" class="w3-button">'+
-                        	   			 '<img src="resources/upload/' + data[i].image_name1 + '" style="height: 138px;" />'+
-                          	   			 '</div>'+
-
-                          	 '<div id="id05" class="w3-modal" >'+
-                          	 							
-							    '<div class="w3-modal-content4 disblock">'+
-							      '<div class="w3-container jdcjeju">'+
-							        '<span onclick="document.getElementById('+"'id05'"+').style.display='+"'none'"+'" class="w3-button w3-display-topright closed">&times;</span>'+
-							       ' <img src="resources/upload/' + data[i].image_name1 + '" style="height: 60%; width: 100%;" />'+
-							      '</div>'+
-							    '</div>'+
-							    
-							    '<div class="w3-modal-content4 disNone">'+
-							      '<div class="w3-container jdcjeju">'+
-							        '<span onclick="document.getElementById('+"'id05'"+').style.display='+"'none'"+'" class="w3-button w3-display-topright closed">&times;</span>'+
-							       ' <img src="resources/upload/' + data[i].image_name2 + '" style="height: 60%; width: 100%;" />'+
-							      '</div>'+
-							    '</div>'+
-							    
-							    '<div class="w3-modal-content4 disNone">'+
-							      '<div class="w3-container jdcjeju">'+
-							        '<span onclick="document.getElementById('+"'id05'"+').style.display='+"'none'"+'" class="w3-button w3-display-topright closed">&times;</span>'+
-							       ' <img src="resources/upload/' + data[i].image_name3 + '" style="height: 60%; width: 100%;" />'+
-							      '</div>'+
-							    '</div>'+
-							    
-							
-
-							   '<div id="bannerControl">'+
-						       
-		                           '<div id="busbtn" class="jejubutton3 button1"  style="cursor: pointer;">'+
-		                               '<img src="https://www.jdcenter.com/images/main/ico_prev.png" style="height: 2.2%;width: 1.2%;margin-left: 35%;margin-top: 14%;position: absolute;"> '+ 
-		                           '</div>'+
-		                            '<div id="busbtn" class="jejubutton3 button2"  style="cursor: pointer;">'+
-		                                '<img src="https://www.jdcenter.com/images/main/ico_next.png" style="height: 2.2%;width: 1.2%;margin-left: 58.5%;margin-top: 14%;position: absolute;">'+
-		                           '</div>'+
-                        
-                         
-                        	   '</div>'+
-                         '</div>'
-
-                              $("#spagetti-menu").append(tag);
-                               
-                            }
+//                                console.log(data[i].name);
+							   var id = "id" + i;
+                               var tag = '<div class="menulist">'+
+	                            	   		'<div class="menuname">'+
+	                            	   		 	'<div style="float : left;" class="menuname">'+data[i].menu_name+'</div>'+
+	                            	   		 '</div>'+
+	                            	   		 '<div class="menuin">'+
+		                            	   		 '<div onclick="document.getElementById(\''+id+'\').style.display='+"'block'"+'" class="w3-button">'+
+		                            	   		 '<img class="menu-img" src="resources/upload/' + data[i].image_name1 + '" style="height: 138px;" />'+
+		                          	   			 '</div>'+
+	                          	   			 '</div>'+	
+	                          	   		 '</div>'+
+			                          	 '<div id="' + id + '" class="w3-modal" >'+
+			                          	 							
+										    '<div class="w3-modal-content4 disNone disblock">'+
+										      '<div class="w3-container jdcjeju">'+
+										        '<span onclick="document.getElementById(\''+id+'\').style.display='+"'none'"+'" class="w3-button w3-display-topright closed">&times;</span>'+
+										       ' <img src="resources/upload/' + data[i].image_name1 + '" style="height: 70%; width: 100%; margin-top:3%;" />'+
+										      '</div>'+
+										    '</div>'+
+										    
+										    '<div class="w3-modal-content4 disNone">'+
+										      '<div class="w3-container jdcjeju">'+
+										        '<span onclick="document.getElementById(\''+id+'\').style.display='+"'none'"+'" class="w3-button w3-display-topright closed">&times;</span>'+
+										       ' <img src="resources/upload/' + data[i].image_name2 + '" style="height: 70%; width: 100%;margin-top:3%;" />'+
+										      '</div>'+
+										    '</div>'+
+										    
+										  
+										    
+										
+			
+										   '<div class="bannerControl">'+
+									       
+					                           '<div class="btn button1"  style="cursor: pointer;margin-left : 2%; margin-top: 15%;">'+
+					                           '<img src="resources/img/KakaoTalk_20171226_135740144.png" style="width : 48px; height : 28px;">'
+					                           '</div>'+
+// 					                            '<div class="btn button2"  style="cursor: pointer;">'+
+// 					                            '<img src="resources/img/KakaoTalk_20171226_135740144.png" style="width : 48px; height : 28px;">'
+// 					                           '</div>'+
+			                        
+			                         
+			                        	   '</div>'+
+			                         	'</div>';
+			
+			                              $("#spagetti-menu").append(tag);
+			                              
+			                              $(".bannerControl .btn").off().on("click", function(){
+			                              
+			                                  var bi = $(".bannerControl .btn").index(this);
+			                                  var i = $(this).closest(".w3-modal").find(".w3-modal-content4").index($(this).closest(".w3-modal").find(".w3-modal-content4.disblock"));
+			                                  
+			                                  $(this).closest(".w3-modal").find(".w3-modal-content4").removeClass("disblock");
+			                                    // addClass() : 클래스를 주입하는 함수
+			                                    // removeClass() : 해당 클래스 삭제하는 함수
+			                                     if(bi%2 == 0){ // 왼쪽
+			                                       if(i == 0){ // 현재 인덱스가 0이면 -1값이 되지 않게 하기 위해서 사용
+			                                          i = ($(this).closest(".w3-modal").find(".w3-modal-content4").length - 1); // 현재 이미지 갯수를 인덱스로 처리 
+			                                       }else {
+			                                          i--; // 현재 인덱스 보다 -1 되도록 처리
+			                                       }
+			                                    }else if(bi%2 == 1){ // 오른쪽
+			                                       if(i == ($(this).closest(".w3-modal").find(".w3-modal-content4").length - 1)){ // 현재 인덱스가 이미지 갯수 보다 커지지 않게 하기 위해서 처리
+			                                          i = 0; // 처음으로 돌아가지 위해서 0 값으로 변경
+			                                       }else {
+			                                          i++; // 현재 인덱스 보다 +1 되도록 처리
+			                                       }
+			                                    }
+			                                    
+			                                     $(this).closest(".w3-modal").find(".w3-modal-content4").eq(i).addClass("disblock").animate({
+			                                        
+			                                     }, 1000); // 위의 정의 되어진 내용으로 화면에 출력
+			                                 });
+			                    }
                          });
+              
+                   
+                       
                     });
                     
      </script>    

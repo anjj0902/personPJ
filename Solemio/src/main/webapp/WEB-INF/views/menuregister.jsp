@@ -180,7 +180,7 @@
                        <input type="text" placeholder="메뉴이름을 작성해주세요." name="menu_name">
                         <input type="file" name="img1" value="열기" />
                         <input type="file" name="img2" value="열기" />
-                        <input type="file" name="img3" value="열기" />
+                        
                      </div>
                      <div name="submenu">
                         <select name="menu">

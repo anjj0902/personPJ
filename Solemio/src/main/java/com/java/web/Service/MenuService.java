@@ -92,4 +92,14 @@ public class MenuService implements MenuServiceInterface {
 		  return cddi.getMenu(menu_type);
 	}
 
+	@Override
+	public HashMap<String, Object> menuselect(HashMap<String, Object> param) {
+	    System.out.println("service menu:"+param);
+		HashMap<String,Object> map =new HashMap<String, Object>();
+		map.put("data",cddi.menuselect(param));
+		System.out.println("service test :"+cddi.menuselect(param));
+		return map;
+	}
+	
+
 }

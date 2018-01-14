@@ -13,7 +13,7 @@ public class Writedao implements WritedaoInterface {
 	SqlSession session;
 	@Override
 	public int inwriting(HashMap<String, Object> param) {
-		System.out.println("notice dao :"+ param);
+//		System.out.println("notice dao :"+ param);
 		return session.insert("sql.InsertNews",param);
 		 
 	}
